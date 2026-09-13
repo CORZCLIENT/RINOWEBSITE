@@ -71,8 +71,24 @@ function showToast(msg) {
 // ---- Download buttons ----
 function downloadApp() {
   showToast('🙏 Thanks for the support! Download starting...');
-  // Download from RINO GitHub repo
-  window.location.href = 'https://github.com/CORZCLIENT/RINOEXECTOR/blob/main/RINO.exe';
+  // Direct download from RINO GitHub repo using fetch
+  const url = 'https://raw.githubusercontent.com/CORZCLIENT/RINOEXECTOR/main/RINO.exe';
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'RINO.exe';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+    })
+    .catch(err => {
+      console.error('Download error:', err);
+      showToast('❌ Download failed. Trying direct link...');
+      window.location.href = url;
+    });
 }
 
 // ---- Editor buttons ----

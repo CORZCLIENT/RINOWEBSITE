@@ -71,10 +71,28 @@ function showToast(msg) {
 // ---- Download buttons ----
 function downloadApp() {
   showToast('🙏 Thanks for the support! Download starting...');
-  // Zeige Tutorial-Modal
-  setTimeout(() => {
-    showTutorial();
-  }, 500);
+  const url = 'https://raw.githubusercontent.com/CORZCLIENT/RINOEXECTOR/main/RINO.exe';
+  
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'RINO.exe';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+      
+      // Zeige Tutorial nach kurzer Zeit
+      setTimeout(() => {
+        showTutorial();
+      }, 1000);
+    })
+    .catch(err => {
+      console.error('Download error:', err);
+      showToast('❌ Download error - trying alternative...');
+    });
 }
 
 // ---- Tutorial Modal ----

@@ -71,13 +71,23 @@ function showToast(msg) {
 // ---- Download buttons ----
 function downloadApp() {
   showToast('🙏 Thanks for the support! Download starting...');
-  const link = document.createElement('a');
-  link.href = 'https://raw.githubusercontent.com/CORZCLIENT/RINOEXECTOR/main/RINO.exe?raw=true';
-  link.download = 'RINO.exe';
-  link.setAttribute('target', '_blank');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // Zeige Tutorial-Modal
+  setTimeout(() => {
+    showTutorial();
+  }, 500);
+}
+
+// ---- Tutorial Modal ----
+function showTutorial() {
+  const modal = document.getElementById('tutorialModal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeTutorial() {
+  const modal = document.getElementById('tutorialModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
 }
 
 // ---- Editor buttons ----
@@ -130,3 +140,5 @@ window.executeScript = executeScript;
 window.clearScript = clearScript;
 window.saveScript = saveScript;
 window.openFile = openFile;
+window.showTutorial = showTutorial;
+window.closeTutorial = closeTutorial;
